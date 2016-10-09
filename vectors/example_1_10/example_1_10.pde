@@ -3,19 +3,33 @@
 // Declare Mover object.
 Mover mover;
 
+Mover[] objects = new Mover[100];
 void setup() {
   size(640,360);
-  // Create Mover object.
-  mover = new Mover();
+  // Create Mover objects.
+  for (int i = 0; i < 100; i++) {
+    float x;
+    float y;
+    PVector location;
+    x = random(0, width);
+    y = random(0, height);
+    location = new PVector(x,y);
+    objects[i] = new Mover(location);
+  }
 }
 
 void draw() {
   background(255);
 
   // Call functions on Mover object.
-  mover.update();
-  mover.checkEdges();
-  mover.display();
+  for (int i = 0; i < objects.length; i++) {
+
+    Mover mover = objects[i];
+
+    mover.update();
+    mover.checkEdges();
+    mover.display();
+  }
 }
 
 class Mover {
@@ -27,8 +41,8 @@ class Mover {
   // The variable topspeed will limit the magnitude of velocity.
   float topspeed;
 
-  Mover() {
-    location = new PVector(width/2,height/2);
+  Mover(PVector loc) {
+    location = loc;
     velocity = new PVector(0,0);
     acceleration = new PVector(-0.001,0.01);
     topspeed = 2.6;
